@@ -15,8 +15,6 @@ services:
     build: webui
     ports:
     - "8000:80"
-    volumes:
-    - "./webui/files/:/files/"
 
   redis:
     image: redis
