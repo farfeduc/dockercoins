@@ -2,21 +2,24 @@ version: "3.8"
 
 services:
   rng:
-    build: rng
+    #build: rng
+    image: rng:24012024-v1
     ports:
     - "8001:80"
     networks:
       - worker-rng
 
   hasher:
-    build: hasher
+    #build: hasher
+    image: hasher:24012024-v1
     ports:
     - "8002:80"
     networks:
       - worker-hasher
 
   webui:
-    build: webui
+    #build: webui
+    image: webui:24012024-v1
     ports:
     - "8000:80"
     volumes:
@@ -35,7 +38,8 @@ services:
       - webui-redis
 
   worker:
-    build: worker
+    #build: worker
+    image: worker:24012024-v1
     networks:
       - worker-rng
       - worker-hasher
