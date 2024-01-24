@@ -1,24 +1,49 @@
-version: "2"
+version: "3.8"
 
 services:
   rng:
     build: rng
     ports:
     - "8001:80"
+    networks:
+      - worker-rng
 
   hasher:
     build: hasher
     ports:
     - "8002:80"
+    networks:
+      - worker-hasher
 
   webui:
     build: webui
     ports:
     - "8000:80"
+    volumes:
+     - type: bind
+       source: ./webui/files/
+       target: /usr/app/files/
+       read_only: true
+    networks:
+      - webui-redis
+
 
   redis:
     image: redis
+    networks:
+      - worker-redis
+      - webui-redis
 
   worker:
     build: worker
+    networks:
+      - worker-rng
+      - worker-hasher
+      - worker-redis
 
+
+networks:
+  worker-rng:
+  worker-hasher:
+  worker-redis:
+  webui-redis:

@@ -53,10 +53,6 @@ function refresh () {
         var msg = ("I'm attending a @docker orchestration workshop, "
                    + "and my #DockerCoins mining rig is crunching "
                    + speed.toFixed(1) + " hashes/second! W00T!");
-        $("#tweet").attr(
-            "href",
-            "https://twitter.com/intent/tweet?text="+encodeURIComponent(msg)
-        );
         if (graph == null) {
             graph = new Rickshaw.Graph({
                 renderer: "area",
@@ -97,14 +93,13 @@ $(function () {
 </head>
 <body>
 
-<h1>DockerCoin Miner WebUI</h1>
+<h1>DockerCoin Miner WebUI - toto</h1>
 
 <div id="graph"></div>
 
 <h2>
   Current mining speed:
   <span id="speed">-</span>
-  <a id="tweet" href="#">(Tweet this!)</a>
 </h2>
 
 </body>
