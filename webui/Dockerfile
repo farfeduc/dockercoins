@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:20.11-slim
 
 # Needed for node 15+ see https://stackoverflow.com/a/65443098
 WORKDIR /usr/app

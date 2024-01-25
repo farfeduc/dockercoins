@@ -1,4 +1,4 @@
-FROM ruby:3-alpine
+FROM ruby:3.3-alpine
 RUN apk add --update build-base curl
 RUN gem install rackup
 RUN gem install sinatra
