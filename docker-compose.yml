@@ -8,6 +8,12 @@ services:
     - "8001:80"
     networks:
       - worker-rng
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:80/"]
+      interval: 5s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
   hasher:
     #build: hasher
@@ -16,10 +22,16 @@ services:
     - "8002:80"
     networks:
       - worker-hasher
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:80/"]
+      interval: 5s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
 
   webui:
     #build: webui
-    image: webui:24012024-v1
+    image: webui:25012024-v1
     ports:
     - "8000:80"
     volumes:
@@ -29,6 +41,12 @@ services:
        read_only: true
     networks:
       - webui-redis
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:80/json"]
+      interval: 5s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
 
 
   redis:
@@ -36,6 +54,12 @@ services:
     networks:
       - worker-redis
       - webui-redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 2
+      start_period: 15s
 
   worker:
     #build: worker
@@ -44,6 +68,13 @@ services:
       - worker-rng
       - worker-hasher
       - worker-redis
+    healthcheck:
+      test: ["CMD", "netstat", "-an", "|", "grep", ":6379", "|", "grep", "ESTABLISHED"]
+      interval: 5s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+      
 
 
 networks:
