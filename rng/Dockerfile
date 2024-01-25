@@ -1,7 +1,7 @@
 FROM python:3.12-alpine
 WORKDIR /usr/app/
 RUN pip install Flask
-COPY rng.py /
+COPY rng.py /usr/app/
 
 ENV UID=12345 \
     GID=23456
