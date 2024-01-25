@@ -3,11 +3,11 @@ version: "3.8"
 services:
   rng:
     #build: rng
-    image: rng:25012024-v3
+    image: rng:25012024-v4
     networks:
       - worker-rng
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:80/"]
+      test: ["CMD", "wget", "--spider", "http://localhost:8080/"]
       interval: 5s
       timeout: 1s
       retries: 2
@@ -15,7 +15,7 @@ services:
 
   hasher:
     #build: hasher
-    image: hasher:25012024-v3
+    image: hasher:25012024-v4
     networks:
       - worker-hasher
     healthcheck:
@@ -27,9 +27,9 @@ services:
 
   webui:
     #build: webui
-    image: webui:25012024-v3
+    image: webui:25012024-v4
     ports:
-    - "8000:80"
+    - "8000:8080"
     volumes:
      - type: bind
        source: ./webui/files/
@@ -38,7 +38,7 @@ services:
     networks:
       - webui-redis
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:80/json"]
+      test: ["CMD", "wget", "--spider", "http://localhost:8080/json"]
       interval: 5s
       timeout: 2s
       retries: 2
@@ -59,7 +59,7 @@ services:
 
   worker:
     #build: worker
-    image: worker:25012024-v3
+    image: worker:25012024-v4
     networks:
       - worker-rng
       - worker-hasher
