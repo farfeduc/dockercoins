@@ -4,8 +4,6 @@ services:
   rng:
     #build: rng
     image: rng:25012024-v3
-    ports:
-    - "8001:80"
     networks:
       - worker-rng
     healthcheck:
@@ -18,12 +16,10 @@ services:
   hasher:
     #build: hasher
     image: hasher:25012024-v3
-    ports:
-    - "8002:80"
     networks:
       - worker-hasher
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:80/"]
+      test: ["CMD", "wget", "--spider", "http://localhost:8080/"]
       interval: 5s
       timeout: 2s
       retries: 2
